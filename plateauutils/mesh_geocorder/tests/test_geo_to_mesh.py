@@ -1,3 +1,4 @@
+import pytest
 from shapely.geometry import Point
 
 
@@ -5,12 +6,9 @@ def test_invalid_mesh():
     """メッシュコードが不正な場合のテスト"""
     from plateauutils.mesh_geocorder.geo_to_mesh import MeshException, _validate_mesh
 
-    try:
-        _validate_mesh("0")
-    except MeshException:
-        pass
-    else:
-        assert False
+    with pytest.raises(MeshException) as e:
+        _validate_mesh("5")
+    assert str(e.value) == "Mesh must be one of 1, 2, 2/1, 3, 4/1"
 
 
 def test_point_to_mesh():
@@ -41,33 +39,21 @@ def test_invalid_mesh_code_to_polygon():
         meshcode_to_polygon,
     )
 
-    try:
+    with pytest.raises(MeshCodeException) as e:
         meshcode_to_polygon("0")
-    except MeshCodeException:
-        pass
-    else:
-        assert False
+    assert str(e.value) == "Mesh code must be 4 or more digits"
 
-    try:
+    with pytest.raises(MeshCodeException) as e:
         meshcode_to_polygon("53394547141")
-    except MeshCodeException:
-        pass
-    else:
-        assert False
+    assert str(e.value) == "Mesh code must be 10 or less digits"
 
-    try:
-        meshcode_to_polygon("5339454711a")
-    except MeshCodeException:
-        pass
-    else:
-        assert False
-
-    try:
+    with pytest.raises(MeshCodeException) as e:
         meshcode_to_polygon("533945475")
-    except MeshCodeException:
-        pass
-    else:
-        assert False
+    assert str(e.value) == "2nd mesh must be 1 to 4"
+
+    with pytest.raises(MeshCodeException) as e:
+        meshcode_to_polygon("5339454715")
+    assert str(e.value) == "4th mesh must be 1 to 4"
 
 
 def test_meshcode_to_polygon():
