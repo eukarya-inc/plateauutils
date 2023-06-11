@@ -140,8 +140,31 @@ def meshcode_to_polygon(mesh_code: str) -> Polygon:
     max_longitude = math.floor(max_lon_section / 60) + max_lon_section % 60 / 60
     left_x = left_x + min_longitude
     left_y = left_y + min_latitude
+
     # 2分の1メッシュの場合
     if len(mesh_code) == 9:
+        right_x = left_x + (max_longitude - min_longitude)
+        right_y = left_y + (max_latitude - min_latitude)
+        return _create_polygon(left_x, left_y, right_x, right_y)
+
+    # 4分の1メッシュ
+    mesh_4th1 = int(mesh_code[9:10])
+    mesh_4th1 = mesh_4th1 - 1
+    lon_section = mesh_4th1 % 2
+    min_lon_section = lon_section * 11.25 / 60
+    max_lon_section = (lon_section + 1) * 11.25 / 60
+    lat_section = mesh_4th1 // 2
+    min_lat_section = lat_section * 7.5 / 60
+    max_lat_section = (lat_section + 1) * 7.5 / 60
+    min_latitude = math.floor(min_lat_section / 60) + min_lat_section % 60 / 60
+    max_latitude = math.floor(max_lat_section / 60) + max_lat_section % 60 / 60
+    min_longitude = math.floor(min_lon_section / 60) + min_lon_section % 60 / 60
+    max_longitude = math.floor(max_lon_section / 60) + max_lon_section % 60 / 60
+    left_x = left_x + min_longitude
+    left_y = left_y + min_latitude
+
+    # 4分の1メッシュの場合
+    if len(mesh_code) == 10:
         right_x = left_x + (max_longitude - min_longitude)
         right_y = left_y + (max_latitude - min_latitude)
         return _create_polygon(left_x, left_y, right_x, right_y)
