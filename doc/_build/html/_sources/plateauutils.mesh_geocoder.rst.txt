@@ -1,0 +1,10 @@
+plateauutils.mesh_geocoder パッケージ
+======================================
+
+plateauutils.mesh_geocoder.geo_to_mesh モジュール
+--------------------------------------------------
+
+.. automodule:: plateauutils.mesh_geocoder.geo_to_mesh.point_to_meshcode
+    :members:
+    :undoc-members:
+    :show-inheritance:
