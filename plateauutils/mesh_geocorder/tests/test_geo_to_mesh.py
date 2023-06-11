@@ -34,6 +34,42 @@ def test_point_to_mesh():
     assert mesh_code == "5339454711"
 
 
+def test_invalid_mesh_code_to_polygon():
+    """メッシュコードが不正な場合のテスト"""
+    from plateauutils.mesh_geocorder.geo_to_mesh import (
+        MeshCodeException,
+        meshcode_to_polygon,
+    )
+
+    try:
+        meshcode_to_polygon("0")
+    except MeshCodeException:
+        pass
+    else:
+        assert False
+
+    try:
+        meshcode_to_polygon("53394547141")
+    except MeshCodeException:
+        pass
+    else:
+        assert False
+
+    try:
+        meshcode_to_polygon("5339454711a")
+    except MeshCodeException:
+        pass
+    else:
+        assert False
+
+    try:
+        meshcode_to_polygon("533945475")
+    except MeshCodeException:
+        pass
+    else:
+        assert False
+
+
 def test_meshcode_to_polygon():
     """メッシュコードからポリゴンを生成するテスト"""
     from plateauutils.mesh_geocorder.geo_to_mesh import meshcode_to_polygon

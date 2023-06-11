@@ -83,6 +83,8 @@ def meshcode_to_polygon(mesh_code: str) -> Polygon:
     """
     if len(mesh_code) < 4:
         raise MeshCodeException("Mesh code must be 4 or more digits")
+    if len(mesh_code) > 10:
+        raise MeshCodeException("Mesh code must be 10 or less digits")
 
     left_x = 0
     right_x = 0
@@ -127,6 +129,8 @@ def meshcode_to_polygon(mesh_code: str) -> Polygon:
 
     # 2分の1メッシュ
     mesh_2nd1 = int(mesh_code[8:9])
+    if (mesh_2nd1 < 1) or (mesh_2nd1 > 4):
+        raise MeshCodeException("2nd mesh must be 1 to 4")
     mesh_2nd1 = mesh_2nd1 - 1
     lon_section = mesh_2nd1 % 2
     min_lon_section = lon_section * 22.5 / 60
@@ -149,6 +153,8 @@ def meshcode_to_polygon(mesh_code: str) -> Polygon:
 
     # 4分の1メッシュ
     mesh_4th1 = int(mesh_code[9:10])
+    if (mesh_4th1 < 1) or (mesh_4th1 > 4):
+        raise MeshCodeException("4th mesh must be 1 to 4")
     mesh_4th1 = mesh_4th1 - 1
     lon_section = mesh_4th1 % 2
     min_lon_section = lon_section * 11.25 / 60
