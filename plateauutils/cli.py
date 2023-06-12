@@ -8,7 +8,9 @@ sys.path.append(str(Path(__file__).resolve().parent.parent))
 from shapely.geometry import Point
 from plateauutils.mesh_geocorder.geo_to_mesh import (
     point_to_meshcode as _point_to_meshcode,
+    meshcode_to_polygon as _meshcode_to_polygon,
     MeshException,
+    MeshCodeException,
 )
 
 
@@ -34,6 +36,17 @@ def point_to_meshcode(longitude, latitude, mesh):
         meshcode = _point_to_meshcode(point, mesh)
         click.echo(meshcode)
     except MeshException as e:
+        click.echo("Error: {}".format(e))
+
+
+@mesh_geocorder.command()
+@click.argument("meshcode", required=True, type=str)
+def meshcode_to_polygon(meshcode):
+    """Convert a meshcode to a polygon"""
+    try:
+        polygon = _meshcode_to_polygon(meshcode)
+        click.echo(polygon.wkt)
+    except MeshCodeException as e:
         click.echo("Error: {}".format(e))
 
 
