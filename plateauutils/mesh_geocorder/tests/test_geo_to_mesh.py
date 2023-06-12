@@ -55,6 +55,10 @@ def test_invalid_mesh_code_to_polygon():
         meshcode_to_polygon("5339454715")
     assert str(e.value) == "4th mesh must be 1 to 4"
 
+    with pytest.raises(MeshCodeException) as e:
+        meshcode_to_polygon("55394")
+    assert str(e.value) == "Mesh code must be 4, 6, 8, 9 or 10 digits"
+
 
 def test_meshcode_to_polygon():
     """メッシュコードからポリゴンを生成するテスト"""

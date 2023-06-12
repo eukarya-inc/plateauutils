@@ -97,6 +97,8 @@ def meshcode_to_polygon(mesh_code: str) -> Polygon:
         raise MeshCodeException("Mesh code must be 4 or more digits")
     if len(mesh_code) > 10:
         raise MeshCodeException("Mesh code must be 10 or less digits")
+    if len(mesh_code) not in [4, 6, 8, 9, 10]:
+        raise MeshCodeException("Mesh code must be 4, 6, 8, 9 or 10 digits")
 
     left_x = 0
     right_x = 0
