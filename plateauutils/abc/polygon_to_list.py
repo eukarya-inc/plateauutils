@@ -7,7 +7,7 @@ class PolygonToList(metaclass=abc.ABCMeta):
 
     Parameters
     ----------
-    polygon : shapely.geometry.Point
+    polygon : shapely.geometry.Polygon
         対象となるポリゴン
     """
 
@@ -16,7 +16,6 @@ class PolygonToList(metaclass=abc.ABCMeta):
         self.bounds = self.polygon.bounds
         self.start_pos = Point(self.bounds[0], self.bounds[1])
         self.end_pos = Point(self.bounds[2], self.bounds[3])
-        self.current_pos = self.start_pos
         self.targets = []
 
     @abc.abstractmethod
@@ -24,7 +23,13 @@ class PolygonToList(metaclass=abc.ABCMeta):
         """対象となるポリゴンを分割してリストを作成する"""
         raise NotImplementedError("split method is not implemented")
 
-    @abc.abstractclassmethod
-    def output(self):
-        """リストを出力する"""
+    @abc.abstractmethod
+    def output(self) -> list:
+        """リストを出力する
+
+        Returns
+        -------
+        list
+            リスト
+        """
         raise NotImplementedError("output method is not implemented")
