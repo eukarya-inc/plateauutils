@@ -12,6 +12,11 @@ from plateauutils.mesh_geocorder.geo_to_mesh import (
     MeshException,
     MeshCodeException,
 )
+from plateauutils.tile_list.geo_to_tile import (
+    point_to_tile as _point_to_tile,
+    tile_to_polygon as _tile_to_polygon,
+    TileRangeException,
+)
 
 
 @click.group()
@@ -47,6 +52,35 @@ def meshcode_to_polygon(meshcode):
         polygon = _meshcode_to_polygon(meshcode)
         click.echo(polygon.wkt)
     except MeshCodeException as e:
+        click.echo("Error: {}".format(e))
+
+
+@cli.group()
+def tile_list():
+    """Tile list commands"""
+    pass
+
+
+@tile_list.command()
+@click.argument("longitude", required=True, type=float)
+@click.argument("latitude", required=True, type=float)
+@click.argument("zoom", required=True, type=int)
+@click.argument("ext", required=False, type=str, default=".mvt")
+def point_to_tile(longitude, latitude, zoom, ext):
+    """Convert a point to a tile"""
+    point = Point(longitude, latitude)
+    tile = _point_to_tile(point, zoom, ext)
+    click.echo(tile)
+
+
+@tile_list.command()
+@click.argument("tile_path", required=True, type=str)
+def tile_to_polygon(tile_path):
+    """Convert a tile to a polygon"""
+    try:
+        polygon = _tile_to_polygon(tile_path)
+        click.echo(polygon.wkt)
+    except TileRangeException as e:
         click.echo("Error: {}".format(e))
 
 
