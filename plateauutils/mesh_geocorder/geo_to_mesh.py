@@ -21,12 +21,18 @@ def _validate_mesh(mesh: str) -> None:
 def point_to_meshcode(point: Point, mesh: str = "2") -> str:
     """緯度経度をメッシュコードに変換して返す
 
-    :param point: 緯度経度を示すPointオブジェクト
-    :type point: shapely.geometry.Point
-    :param mesh: メッシュの種類
-    :type mesh: str
-    :return: メッシュコード
-    :rtype: str"""
+    Parameters
+    ----------
+    point : shapely.geometry.Point
+        緯度経度を示すPointオブジェクト
+    mesh : str, optional
+        メッシュの種類, by default "2"
+
+    Returns
+    -------
+    str
+        メッシュコード
+    """
     # メッシュのバリデーション
     _validate_mesh(mesh)
 
@@ -88,10 +94,15 @@ def meshcode_to_polygon(mesh_code: str) -> Polygon:
     """
     メッシュコードをポリゴンに変換して返す
 
-    :param mesh_code: メッシュコード
-    :type mesh_code: str
-    :return: メッシュコードに対応するポリゴン
-    :rtype: shapely.geometry.Polygon
+    Parameters
+    ----------
+    mesh_code : str
+        メッシュコード
+
+    Returns
+    -------
+    shapely.geometry.Polygon
+        メッシュコードに対応するポリゴン
     """
     if len(mesh_code) < 4:
         raise MeshCodeException("Mesh code must be 4 or more digits")
@@ -195,6 +206,22 @@ def _create_polygon(
 ) -> Polygon:
     """
     バウンディングボックスからポリゴンを作成して返す
+
+    Parameters
+    ----------
+    left_x : float
+        左のx座標
+    left_y : float
+        左のy座標
+    right_x : float
+        右のx座標
+    right_y : float
+        右のy座標
+
+    Returns
+    -------
+    shapely.geometry.Polygon
+        ポリゴン
     """
     coords = (
         (left_x, left_y),
