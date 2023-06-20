@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "plateauutils"
+description = "A collection of utilities for the Plateau project"
+readme = "README.rst"
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Programming Language :: Python :: 3",
+]
+version = "0.0.1"
+dependencies = [
+    "click",
+    "shapely"
+]
+authors = [
+    {name = "Taro Matsuzawa", email = "btm@tech.email.ne.jp"},
+]
+requires-python = ">=3.9"
+repository = "https://github.com/eukarya-inc/plateauutils"
+keywords = ['plateau']
+
+[tool.hatch.build]
+exclude = ["tests/*"]
