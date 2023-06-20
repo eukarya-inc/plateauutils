@@ -6,6 +6,26 @@
 Welcome to plateauutils's documentation!
 ========================================
 
+This is a collection of utilities for the `Plateau <https://www.mlit.go.jp/plateau/>`_ project.
+
+How to develop
+--------------
+
+.. code:: bash
+
+    python3.9 -m venv venv
+    ./venv/bin/activate
+    pip install -U pip
+    pip install -r dev-requirements.txt
+    pytest --cov=plateauutils --cov-report=html --cov-fail-under=90
+
+How to install
+--------------
+
+.. code:: bash
+
+    pip install plateauutils
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
