@@ -8,6 +8,8 @@ Welcome to plateauutils's documentation!
 
 This is a collection of utilities for the `Plateau <https://www.mlit.go.jp/plateau/>`_ project.
 
+Source code available at `GitHub <https://github.com/eukarya-inc/plateauutils>`_.
+
 How to develop
 --------------
 

@@ -13,8 +13,8 @@ import plateauutils
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "plateauutils"
-copyright = "2023, Taro Matsuzawa"
-author = "Taro Matsuzawa"
+copyright = "2023, Eukarya Inc."
+author = "Eukarya Inc."
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
