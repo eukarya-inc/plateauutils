@@ -17,7 +17,7 @@ dependencies = [
     "shapely"
 ]
 authors = [
-    {name = "Taro Matsuzawa", email = "btm@tech.email.ne.jp"},
+    {name = "Eukarya Inc."},
 ]
 requires-python = ">=3.9"
 repository = "https://github.com/eukarya-inc/plateauutils"
@@ -25,3 +25,8 @@ keywords = ['plateau']
 
 [tool.hatch.build]
 exclude = ["tests/*"]
+
+[project.urls]
+"Homepage" = "https://eukarya-inc.github.io/plateauutils/"
+"Bug Reports" = "https://github.com/eukarya-inc/plateauutils/issues"
+"Source" = "https://github.com/eukarya-inc/plateauutils"
