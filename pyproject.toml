@@ -11,10 +11,13 @@ classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Programming Language :: Python :: 3",
 ]
-version = "0.0.1"
+version = "0.0.2"
 dependencies = [
     "click",
-    "shapely"
+    "numpy",
+    "requests",
+    "shapely",
+    "tqdm",
 ]
 authors = [
     {name = "Eukarya Inc."},
