@@ -11,7 +11,7 @@ class PolygonToMeshCodeList(PolygonToList):
 
     Parameters
     ----------
-    polygon : shapely.geometry.Point
+    polygon : shapely.geometry.Polygon
         対象となるポリゴン
     mesh : str
         メッシュコードの粒度
