@@ -17,4 +17,4 @@ def test_citygml_parser():
         assert result[0]["center"] == [130.41263587199947, 33.22489181671553]
         assert result[0]["min_height"] == 3.805999994277954
         assert result[0]["measured_height"] == 9.3
-        assert result[0]["building_structure_type"] == "610"
+        assert result[0]["building_structure_type"] == "非木造"

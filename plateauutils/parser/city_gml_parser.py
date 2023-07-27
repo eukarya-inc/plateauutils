@@ -70,7 +70,7 @@ class CityGMLParser(PlateauParser):
                 tree = ET.parse(file_path)
                 root = tree.getroot()
                 # パース処理を実施する
-                ret = self._parse(root)
+                ret = self._parse(root, file_path)
                 # 返り値に追加
                 return_list.extend(ret)
         # 返り値を返却
@@ -118,7 +118,7 @@ class CityGMLParser(PlateauParser):
         # 返り値を返す
         return return_list
 
-    def _parse(self, root: ET.Element) -> list:
+    def _parse(self, root: ET.Element, file_path: str) -> list:
         # 返り値を作成
         return_list = []
         # core:cityObjectMemberの一覧を取得
@@ -146,7 +146,28 @@ class CityGMLParser(PlateauParser):
             # uro:buildingStructureTypeを取得
             building_structure_type = building_detail_attribute.find(
                 ".//{https://www.geospatial.jp/iur/uro/2.0}buildingStructureType"
-            ).text
+            )
+            # uro:codeSpaceを取得
+            code_space = building_structure_type.get("codeSpace")
+            # codeSpaceから値を取得
+            code_space_root = ET.parse(
+                os.path.abspath(os.path.join(file_path, "..", code_space))
+            )
+            code_space_root_root = code_space_root.getroot()
+            building_structure_type_text = None
+            for code_space_root_root_child in code_space_root_root.findall(
+                ".//{http://www.opengis.net/gml}dictionaryEntry"
+            ):
+                gml_name = code_space_root_root_child.find(
+                    ".//{http://www.opengis.net/gml}name"
+                )
+                if str(gml_name.text) == str(building_structure_type.text):
+                    building_structure_type_text = str(
+                        code_space_root_root_child.find(
+                            ".//{http://www.opengis.net/gml}description"
+                        ).text
+                    )
+                    break
             # bldg:lod1Solidを取得
             lod1_solid = city_object_member.find(
                 ".//{http://www.opengis.net/citygml/building/2.0}lod1Solid"
@@ -157,7 +178,7 @@ class CityGMLParser(PlateauParser):
                 "center": None,
                 "min_height": 10000,
                 "measured_height": measured_height,
-                "building_structure_type": building_structure_type,
+                "building_structure_type": building_structure_type_text,
             }
             # gml:posListを取得
             pos_lists = lod1_solid.findall(".//{http://www.opengis.net/gml}posList")
