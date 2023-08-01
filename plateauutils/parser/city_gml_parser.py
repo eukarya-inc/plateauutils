@@ -69,8 +69,65 @@ class CityGMLParser(PlateauParser):
                 # XMLのオブジェクトとして読み込む
                 tree = ET.parse(file_path)
                 root = tree.getroot()
+                # namespaceを作成
+                ns = {
+                    "core": "http://www.opengis.net/citygml/2.0",
+                    "bldg": "http://www.opengis.net/citygml/building/2.0",
+                    "gml": "http://www.opengis.net/gml",
+                    "uro": "",
+                }
+                # 処理の分岐のためのversion変数を作成
+                version = None
+                # uroのnamespaceとversionを取得
+                if (
+                    len(
+                        root.findall(
+                            ".//{https://www.geospatial.jp/iur/uro/2.0}buildingDetailAttribute"
+                        )
+                    )
+                    > 0
+                ):
+                    ns["uro"] = "https://www.geospatial.jp/iur/uro/2.0"
+                    version = 2
+                elif (
+                    len(
+                        root.findall(
+                            ".//{https://www.geospatial.jp/iur/uro/3.0}buildingDetailAttribute"
+                        )
+                    )
+                    > 0
+                ):
+                    ns["uro"] = "https://www.geospatial.jp/iur/uro/3.0"
+                    version = 3
+                elif (
+                    len(
+                        root.findall(
+                            ".//{http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4}buildingDetails"
+                        )
+                    )
+                    > 0
+                ):
+                    ns[
+                        "uro"
+                    ] = "http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4"
+                    version = 1
+                elif (
+                    len(
+                        root.findall(
+                            ".//{https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5}buildingDetails"
+                        )
+                    )
+                    > 0
+                ):
+                    ns[
+                        "uro"
+                    ] = "https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5"
+                    version = 1
+                # versionがNoneならエラーとする
+                if version is None:
+                    raise ValueError("version is None")
                 # パース処理を実施する
-                ret = self._parse(root, file_path)
+                ret = self._parse(root, file_path, ns, version)
                 # 返り値に追加
                 return_list.extend(ret)
         # 返り値を返却
@@ -118,34 +175,33 @@ class CityGMLParser(PlateauParser):
         # 返り値を返す
         return return_list
 
-    def _parse(self, root: ET.Element, file_path: str) -> list:
+    def _parse(self, root: ET.Element, file_path: str, ns: dict, version: int) -> list:
         # 返り値を作成
         return_list = []
         # core:cityObjectMemberの一覧を取得
-        city_object_members = root.findall(
-            ".//{http://www.opengis.net/citygml/2.0}cityObjectMember"
-        )
+        city_object_members = root.findall(".//core:cityObjectMember", ns)
         # core:cityObjectMemberごとに処理
         for city_object_member in city_object_members:
             # bldg:Buildingを取得
-            building = city_object_member.find(
-                ".//{http://www.opengis.net/citygml/building/2.0}Building"
-            )
+            building = city_object_member.find(".//bldg:Building", ns)
             # gml:idを取得
-            gid = building.attrib["{http://www.opengis.net/gml}id"]
+            gid = building.get("{http://www.opengis.net/gml}id")
             # bldg:mesuredHeightを取得
             measured_height = float(
-                city_object_member.find(
-                    ".//{http://www.opengis.net/citygml/building/2.0}measuredHeight"
-                ).text
+                city_object_member.find(".//bldg:measuredHeight", ns).text
             )
-            # uro:buildingDetailAttributeを取得
-            building_detail_attribute = city_object_member.find(
-                ".//{https://www.geospatial.jp/iur/uro/2.0}buildingDetailAttribute"
-            )
+            # uro:BuildingDetails(v1) もしくは uro:buildingDetailAttribute(v2以降)を取得
+            if version == 1:
+                building_detail_attribute = city_object_member.find(
+                    ".//uro:BuildingDetails", ns
+                )
+            else:
+                building_detail_attribute = city_object_member.find(
+                    ".//uro:buildingDetailAttribute", ns
+                )
             # uro:buildingStructureTypeを取得
             building_structure_type = building_detail_attribute.find(
-                ".//{https://www.geospatial.jp/iur/uro/2.0}buildingStructureType"
+                ".//uro:buildingStructureType", ns
             )
             # uro:codeSpaceを取得
             code_space = building_structure_type.get("codeSpace")
@@ -156,22 +212,16 @@ class CityGMLParser(PlateauParser):
             code_space_root_root = code_space_root.getroot()
             building_structure_type_text = None
             for code_space_root_root_child in code_space_root_root.findall(
-                ".//{http://www.opengis.net/gml}dictionaryEntry"
+                ".//gml:dictionaryEntry", ns
             ):
-                gml_name = code_space_root_root_child.find(
-                    ".//{http://www.opengis.net/gml}name"
-                )
+                gml_name = code_space_root_root_child.find(".//gml:name", ns)
                 if str(gml_name.text) == str(building_structure_type.text):
                     building_structure_type_text = str(
-                        code_space_root_root_child.find(
-                            ".//{http://www.opengis.net/gml}description"
-                        ).text
+                        code_space_root_root_child.find(".//gml:description", ns).text
                     )
                     break
             # bldg:lod1Solidを取得
-            lod1_solid = city_object_member.find(
-                ".//{http://www.opengis.net/citygml/building/2.0}lod1Solid"
-            )
+            lod1_solid = city_object_member.find(".//bldg:lod1Solid", ns)
             # 返り値に入る値を作成
             return_value = {
                 "gid": gid,
@@ -181,7 +231,7 @@ class CityGMLParser(PlateauParser):
                 "building_structure_type": building_structure_type_text,
             }
             # gml:posListを取得
-            pos_lists = lod1_solid.findall(".//{http://www.opengis.net/gml}posList")
+            pos_lists = lod1_solid.findall(".//gml:posList", ns)
             for poi_list in pos_lists:
                 # posListをパース
                 polygon, max_height = self._parse_poi_list(poi_list.text)
