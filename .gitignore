@@ -137,9 +137,6 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# Visual Studio code
-.vscode/
-
 # setup.py pbf auto generate files
 AUTHORS
 ChangeLog
