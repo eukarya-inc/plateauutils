@@ -31,9 +31,9 @@ class PlateauParser(metaclass=abc.ABCMeta):
         filename = url.split("/")[-1]
         # 保存先パスを作成
         saved_path = join(target_dir, filename)
-        # 保存先パスが既に存在すればエラー
+        # 保存パスにファイルが存在すれば、そのパスを返す
         if exists(saved_path):
-            raise FileExistsError(f"{saved_path} already exists.")
+            return saved_path
         # 進捗を表示するため、ストリームでダウンロード
         response = requests.get(url, stream=True)
         # レスポンスが200ならダウンロード
