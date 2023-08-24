@@ -1,6 +1,6 @@
 # coding: utf-8
 import reearthcmsapi
-from reearthcmsapi.apis.tags import models_api, items_api
+from reearthcmsapi.apis.tags import items_project_api
 from reearthcmsapi.model.model import Model
 from reearthcmsapi.model.versioned_item import VersionedItem
 from reearthcmsapi.model.asset_embedding import AssetEmbedding
@@ -75,32 +75,15 @@ def private_query(
         host = endpoint,
         access_token = access_token
     )
-    model_id = None
     # Enter a context with an instance of the API client
     with reearthcmsapi.ApiClient(configuration) as api_client:
         # Create an instance of the API class
-        api_instance = models_api.ModelsApi(api_client)
-
-        # example passing only required values which don't have defaults set
-        path_params = {
-            'projectIdOrAlias': project,
-            'modelIdOrKey': model,
-        }
-        # get model id from aliases of a project and a model
-        try:
-            # Returns a model.
-            api_response = api_instance.model_get_with_project(
-                path_params=path_params,
-            )
-            model_id = api_response.body['id']
-        except reearthcmsapi.ApiException as e:
-            print("Exception when calling ModelsApi->model_get_with_project: %s\n" % e)
-                # Create an instance of the API class
-        api_instance = items_api.ItemsApi(api_client)
+        api_instance = items_project_api.ItemsProjectApi(api_client)
 
         # example passing only optional values
         path_params = {
-            'modelId': model_id,
+            'projectIdOrAlias': project,
+            'modelIdOrKey': model,
         }
         page = 1
         perPage = 50
@@ -115,7 +98,7 @@ def private_query(
         }
         try:
             # Returns a list of items.
-            api_response = api_instance.item_filter(
+            api_response = api_instance.item_filter_with_project(
                 path_params=path_params,
                 query_params=query_params,
             )
@@ -138,7 +121,7 @@ def private_query(
             }
             try:
                 # Returns a list of items.
-                api_response = api_instance.item_filter(
+                api_response = api_instance.item_filter_with_project(
                     path_params=path_params,
                     query_params=query_params,
                 )
