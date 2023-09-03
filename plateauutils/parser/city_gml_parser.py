@@ -49,7 +49,7 @@ class CityGMLParser(PlateauParser):
             for name in zip_file.namelist():
                 for target in self.targets:
                     path = os.path.join("udx", "bldg", target + "_bldg")
-                    if name.find(path) >= 0:
+                    if name.find(path) >= 0 and name.endswith(".gml"):
                         hit_targets.append(name)
         if len(hit_targets) == 0:
             raise ValueError(f"target_path: {target_path} is not target")
