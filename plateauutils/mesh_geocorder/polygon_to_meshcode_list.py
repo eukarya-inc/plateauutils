@@ -96,16 +96,19 @@ def _meshcode_range(start_mesh: int, end_mesh: int) -> list:
     list
         メッシュコードのリスト
     """
-    start_pos = str(start_mesh)
-    end_pos = str(end_mesh)
-    matrix = []
-    # 開始メッシュコードと終了メッシュコードの各桁の範囲をリストに格納
-    for i in range(len(start_pos)):
-        if int(start_pos[i]) <= int(end_pos[i]):
-            matrix.append(range(int(start_pos[i]), int(end_pos[i]) + 1))
-        else:
-            matrix.append(range(0, 10))
-    # 全ての組み合わせを生成
-    combinations = product(*matrix)
-    # 各組み合わせを文字列として結合
-    return ["".join(map(str, combo)) for combo in combinations]
+    # start_pos = str(start_mesh)
+    # end_pos = str(end_mesh)
+    # print(start_pos, end_pos)
+    # matrix = []
+    # # 開始メッシュコードと終了メッシュコードの各桁の範囲をリストに格納
+    # for i in range(len(start_pos)):
+    #     if int(start_pos[i]) < int(end_pos[i]):
+    #         matrix.append(range(int(start_pos[i]), int(end_pos[i]) + 1))
+    #     else:
+    #         matrix.append(range(0, 10))
+    # # 全ての組み合わせを生成
+    # combinations = product(*matrix)
+    # # 各組み合わせを文字列として結合
+    # return ["".join(map(str, combo)) for combo in combinations]
+    combinations = range(start_mesh, end_mesh + 1)
+    return [str(combo) for combo in combinations]

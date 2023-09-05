@@ -1,19 +1,5 @@
-from plateauutils.mesh_geocorder.polygon_to_meshcode_list import (
-    PolygonToMeshCodeList,
-    _meshcode_range,
-)
+from plateauutils.mesh_geocorder.polygon_to_meshcode_list import PolygonToMeshCodeList
 from shapely import from_wkt
-
-
-def test_meshcode_range():
-    assert _meshcode_range(5136, 5238) == [
-        "5136",
-        "5137",
-        "5138",
-        "5236",
-        "5237",
-        "5238",
-    ]
 
 
 def test_polygon_to_list():
@@ -56,3 +42,8 @@ def test_polygon_to_list():
     assert polygon_to_list.output() == sorted(
         ["5336247314", "5336247323", "5336247332", "5336247341"]
     )
+    polygon = from_wkt(
+        "POLYGON ((130.41249721501615 33.224722548534864, 130.41249721501615 33.348, 130.59 33.348, 130.59 33.224722548534864, 130.41249721501615 33.224722548534864))"
+    )
+    polygon_to_list = PolygonToMeshCodeList(polygon, "3")
+    assert "49307460" in polygon_to_list.output()
