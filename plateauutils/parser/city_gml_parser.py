@@ -1,10 +1,8 @@
-import glob
 import numpy as np
 import os
 from plateauutils.abc.plateau_parser import PlateauParser
 from plateauutils.mesh_geocorder.polygon_to_meshcode_list import PolygonToMeshCodeList
 from shapely.geometry import Polygon
-import shutil
 import xml.etree.ElementTree as ET
 import zipfile
 
@@ -49,26 +47,17 @@ class CityGMLParser(PlateauParser):
             for name in zip_file.namelist():
                 for target in self.targets:
                     path = os.path.join("udx", "bldg", target + "_bldg")
-                    if name.find(path) >= 0:
-                        hit_targets.append(target)
+                    if name.find(path) >= 0 and name.endswith(".gml"):
+                        hit_targets.append(name)
         if len(hit_targets) == 0:
             raise ValueError(f"target_path: {target_path} is not target")
-        # zipファイルを解凍する
-        unarchived_dir = target_path.replace(".zip", "")
-        shutil.unpack_archive(target_path, unarchived_dir)
         # 返り値を作成
         return_list = []
-        # 解凍したファイルをパースする
-        for target in hit_targets:
-            # ファイルパスを作成
-            target_file_path = os.path.join(
-                unarchived_dir, "*", "udx", "bldg", target + "_bldg_*.gml"
-            )
-            # ファイルが二つ以上ある場合に対応させる
-            for file_path in glob.glob(target_file_path):
+        with zipfile.ZipFile(target_path) as zip_file:
+            # 解凍したファイルをパースする
+            for target in hit_targets:
                 # XMLのオブジェクトとして読み込む
-                tree = ET.parse(file_path)
-                root = tree.getroot()
+                root = ET.fromstring(zip_file.read(target))
                 # namespaceを作成
                 ns = {
                     "core": "http://www.opengis.net/citygml/2.0",
@@ -127,7 +116,7 @@ class CityGMLParser(PlateauParser):
                 if version is None:
                     raise ValueError("version is None")
                 # パース処理を実施する
-                ret = self._parse(root, file_path, ns, version)
+                ret = self._parse(root, target, zip_file, ns, version)
                 # 返り値に追加
                 return_list.extend(ret)
         # 返り値を返却
@@ -175,7 +164,14 @@ class CityGMLParser(PlateauParser):
         # 返り値を返す
         return return_list
 
-    def _parse(self, root: ET.Element, file_path: str, ns: dict, version: int) -> list:
+    def _parse(
+        self,
+        root: ET.Element,
+        target: str,
+        zip_file: zipfile.ZipFile,
+        ns: dict,
+        version: int,
+    ) -> list:
         # 返り値を作成
         return_list = []
         # core:cityObjectMemberの一覧を取得
@@ -204,22 +200,28 @@ class CityGMLParser(PlateauParser):
                 ".//uro:buildingStructureType", ns
             )
             # uro:codeSpaceを取得
-            code_space = building_structure_type.get("codeSpace")
-            # codeSpaceから値を取得
-            code_space_root = ET.parse(
-                os.path.abspath(os.path.join(file_path, "..", code_space))
-            )
-            code_space_root_root = code_space_root.getroot()
-            building_structure_type_text = None
-            for code_space_root_root_child in code_space_root_root.findall(
-                ".//gml:dictionaryEntry", ns
-            ):
-                gml_name = code_space_root_root_child.find(".//gml:name", ns)
-                if str(gml_name.text) == str(building_structure_type.text):
-                    building_structure_type_text = str(
-                        code_space_root_root_child.find(".//gml:description", ns).text
-                    )
-                    break
+            try:
+                code_space = building_structure_type.get("codeSpace")
+                # codeSpaceから値を取得
+                code_space_path = os.path.normpath(
+                    os.path.join(target, "..", code_space)
+                )
+                code_space_root = ET.fromstring(zip_file.read(code_space_path))
+                building_structure_type_text = None
+                for code_space_root_root_child in code_space_root.findall(
+                    ".//gml:dictionaryEntry", ns
+                ):
+                    gml_name = code_space_root_root_child.find(".//gml:name", ns)
+                    if str(gml_name.text) == str(building_structure_type.text):
+                        building_structure_type_text = str(
+                            code_space_root_root_child.find(
+                                ".//gml:description", ns
+                            ).text
+                        )
+                        break
+            except AttributeError:
+                print("uro:buildingStructureType is NoneType in", gid, "in", target)
+                building_structure_type_text = "不明"
             # bldg:lod1Solidを取得
             lod1_solid = city_object_member.find(".//bldg:lod1Solid", ns)
             # 返り値に入る値を作成
