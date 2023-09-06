@@ -1,10 +1,8 @@
-import glob
 import numpy as np
 import os
 from plateauutils.abc.plateau_parser import PlateauParser
 from plateauutils.mesh_geocorder.polygon_to_meshcode_list import PolygonToMeshCodeList
 from shapely.geometry import Polygon
-import shutil
 import xml.etree.ElementTree as ET
 import zipfile
 
@@ -202,20 +200,28 @@ class CityGMLParser(PlateauParser):
                 ".//uro:buildingStructureType", ns
             )
             # uro:codeSpaceを取得
-            code_space = building_structure_type.get("codeSpace")
-            # codeSpaceから値を取得
-            code_space_path = os.path.normpath(os.path.join(target, "..", code_space))
-            code_space_root = ET.fromstring(zip_file.read(code_space_path))
-            building_structure_type_text = None
-            for code_space_root_root_child in code_space_root.findall(
-                ".//gml:dictionaryEntry", ns
-            ):
-                gml_name = code_space_root_root_child.find(".//gml:name", ns)
-                if str(gml_name.text) == str(building_structure_type.text):
-                    building_structure_type_text = str(
-                        code_space_root_root_child.find(".//gml:description", ns).text
-                    )
-                    break
+            try:
+                code_space = building_structure_type.get("codeSpace")
+                # codeSpaceから値を取得
+                code_space_path = os.path.normpath(
+                    os.path.join(target, "..", code_space)
+                )
+                code_space_root = ET.fromstring(zip_file.read(code_space_path))
+                building_structure_type_text = None
+                for code_space_root_root_child in code_space_root.findall(
+                    ".//gml:dictionaryEntry", ns
+                ):
+                    gml_name = code_space_root_root_child.find(".//gml:name", ns)
+                    if str(gml_name.text) == str(building_structure_type.text):
+                        building_structure_type_text = str(
+                            code_space_root_root_child.find(
+                                ".//gml:description", ns
+                            ).text
+                        )
+                        break
+            except AttributeError:
+                print("uro:buildingStructureType is NoneType in", gid, "in", target)
+                building_structure_type_text = "不明"
             # bldg:lod1Solidを取得
             lod1_solid = city_object_member.find(".//bldg:lod1Solid", ns)
             # 返り値に入る値を作成
