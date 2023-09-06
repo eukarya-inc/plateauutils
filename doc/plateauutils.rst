@@ -6,3 +6,4 @@ plateauutils パッケージ
     plateauutils.mesh_geocorder
     plateauutils.tile_list
     plateauutils.parser
+    plateauutils.citygmlfinder
