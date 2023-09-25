@@ -16,6 +16,7 @@ dependencies = [
     "click",
     "numpy",
     "pandas",
+    "Pillow",
     "py3dtiles",
     "pyproj",
     "requests",
