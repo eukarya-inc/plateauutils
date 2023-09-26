@@ -11,7 +11,7 @@ classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Programming Language :: Python :: 3",
 ]
-version = "0.0.10"
+version = "0.0.11"
 dependencies = [
     "click",
     "numpy",
