@@ -3,6 +3,8 @@ Plateau Utils
 
 This is a collection of utilities for the `Plateau <https://www.mlit.go.jp/plateau/>`_ project.
 
+CityGML and MvtTile parsers.
+
 .. code:: python
 
     >>> from shapely.geometry import Point
@@ -24,6 +26,17 @@ This is a collection of utilities for the `Plateau <https://www.mlit.go.jp/plate
     >>> result = parser.download_and_parse("https://assets.cms.plateau.reearth.io/assets/43/53a0e1-cc14-4228-a5ef-19333a23596d/40203_kurume-shi_2020_3dtiles-mvt_3_op.zip", "/tmp")
     >>> result
     ['/tmp/40203_kurume-shi_2020_3dtiles-mvt_3_op/luse/15/28254/13174.mvt']
+
+Flood converter.
+
+.. code:: python
+
+    >>> from plateauutils.flood_converter.flood_to_3dtiles import FloodTo3dtiles
+    >>> f = FloodTo3dtiles()
+    >>> f.convert('/tmp/floodmap_depth', '/tmp/depth_3dtiles')
+    >>> from plateauutils.flood_converter.flood_to_png import FloodToPng
+    >>> p = FloodToPng('/tmp/floodmap_depth')
+    >>> p.parse('/tmp/depth_png')
 
 How to develop
 --------------

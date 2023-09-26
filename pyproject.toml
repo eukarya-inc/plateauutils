@@ -15,6 +15,10 @@ version = "0.0.10"
 dependencies = [
     "click",
     "numpy",
+    "pandas",
+    "Pillow",
+    "py3dtiles",
+    "pyproj",
     "requests",
     "shapely",
     "tqdm",
