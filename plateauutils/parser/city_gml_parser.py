@@ -183,9 +183,13 @@ class CityGMLParser(PlateauParser):
             # gml:idを取得
             gid = building.get("{http://www.opengis.net/gml}id")
             # bldg:mesuredHeightを取得
-            measured_height = float(
-                city_object_member.find(".//bldg:measuredHeight", ns).text
-            )
+            try:
+                measured_height = float(
+                    city_object_member.find(".//bldg:measuredHeight", ns).text
+                )
+            except AttributeError:
+                print("bldg:measuredHeight is NoneType in", gid, "in", target)
+                measured_height = None
             # uro:BuildingDetails(v1) もしくは uro:buildingDetailAttribute(v2以降)を取得
             if version == 1:
                 building_detail_attribute = city_object_member.find(
@@ -221,7 +225,7 @@ class CityGMLParser(PlateauParser):
                         break
             except AttributeError:
                 print("uro:buildingStructureType is NoneType in", gid, "in", target)
-                building_structure_type_text = "不明"
+                building_structure_type_text = None
             # bldg:lod1Solidを取得
             lod1_solid = city_object_member.find(".//bldg:lod1Solid", ns)
             # 返り値に入る値を作成
