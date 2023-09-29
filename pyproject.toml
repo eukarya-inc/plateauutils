@@ -20,6 +20,7 @@ dependencies = [
     "py3dtiles",
     "pyproj",
     "requests",
+    "reearthcmsapi",
     "shapely",
     "tqdm",
 ]
