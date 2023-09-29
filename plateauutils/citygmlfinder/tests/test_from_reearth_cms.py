@@ -198,3 +198,67 @@ def test_private_query_fail_on_second():
         city_name="西東京市",
     )
     assert result is None
+
+@httpretty.activate(verbose=True, allow_net_connect=False)
+def test_asset_upload():
+    from plateauutils.citygmlfinder.from_reearth_cms import upload_to_reearth
+
+    data = """{
+  "archiveExtractionStatus": "done",
+  "contentType": "text/plain; charset=utf-8",
+  "createdAt": "2023-09-29T08:58:10.712Z",
+  "file": {
+    "contentType": "text/plain; charset=utf-8",
+    "name": "sample.txt",
+    "path": "/sample.txt",
+    "size": 13
+  },
+  "id": "01hbg2hrwr1qvx6prdxsf44x1z",
+  "name": "sample.txt",
+  "previewType": "unknown",
+  "projectId": "01h2f43g1w67as5meqvbh4xas6",
+  "totalSize": 13,
+  "updatedAt": "0001-01-01T00:00:00Z",
+  "url": "http://localhost:8080/assets/assets/6b/665c61-9168-4a30-b9c4-5ee88be7f71a/sample.txt"
+}"""
+    httpretty.register_uri(
+        httpretty.POST,
+        "http://localhost:8081/api/projects/dummy/assets",
+        body=data,
+        content_type="application/json",
+    )
+    result = upload_to_reearth(
+        endpoint="http://localhost:8081/api",
+        access_token="dummy",
+        project="dummy",
+        filepath="./plateauutils/citygmlfinder/tests/data1.json"
+    )
+    assert (
+        result
+        == True
+    )
+
+@httpretty.activate(verbose=True, allow_net_connect=False)
+def test_asset_upload_fail():
+    from plateauutils.citygmlfinder.from_reearth_cms import upload_to_reearth
+
+    data = """{
+  "error": "operation denied"
+}"""
+    httpretty.register_uri(
+        httpretty.POST,
+        "http://localhost:8081/api/projects/dummy/assets",
+        status=400,
+        body=data,
+        content_type="application/json",
+    )
+    result = upload_to_reearth(
+        endpoint="http://localhost:8081/api",
+        access_token="dummy",
+        project="dummy",
+        filepath="./plateauutils/citygmlfinder/tests/data1.json"
+    )
+    assert (
+        result
+        == False
+    )

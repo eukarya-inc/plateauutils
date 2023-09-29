@@ -1,6 +1,7 @@
 # coding: utf-8
 import reearthcmsapi
-from reearthcmsapi.apis.tags import items_project_api
+from reearthcmsapi.apis.tags import items_project_api, assets_project_api
+from reearthcmsapi.model.asset import Asset
 from reearthcmsapi.model.model import Model
 from reearthcmsapi.model.versioned_item import VersionedItem
 from reearthcmsapi.model.asset_embedding import AssetEmbedding
@@ -182,3 +183,50 @@ def private_query(
                     return url
             except reearthcmsapi.ApiException as e:
                 print("Exception when calling ItemsApi->item_filter: %s\n" % e)
+
+# upload file to the reearth project using reearth-cms-api
+def upload_to_reearth(
+    endpoint: str = None,
+    access_token: str = None,
+    project: str = None,
+    filepath: str = None,
+):
+    """Re:EarthのプライベートAPIを利用してプロジェクトにファイルをアップロードする
+
+    Parameters
+    ----------
+    endpoint : str
+        APIのエンドポイント
+    access_token : str
+        APIのアクセストークン
+    project : str
+        プロジェクトのID
+    filepath : str
+        ローカルコンピュータ上のファイルパス
+
+    Returns
+    -------
+    boolean
+        アップロードの成否
+    """
+    configuration = reearthcmsapi.Configuration(
+        host = endpoint,
+        access_token = access_token
+    )
+    with reearthcmsapi.ApiClient(configuration) as api_client:
+        api_instance = assets_project_api.AssetsProjectApi(api_client)
+        path_params = {
+            'projectId': project,
+        }
+        body = dict(
+            file=open(filepath, 'rb'),
+            skip_decompression=False,
+        )
+        try:
+            api_response = api_instance.asset_create(
+                path_params=path_params,
+                body=body,
+            )
+            return True
+        except reearthcmsapi.ApiException as e:
+            return False
