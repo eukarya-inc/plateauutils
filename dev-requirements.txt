@@ -7,7 +7,6 @@ idna==3.4
 numpy==1.26.0
 pandas==2.1.1
 Pillow==10.0.1
-plateauutils @ file:///Users/niryuu/git/plateauutils
 psycopg2-binary==2.9.8
 py3dtiles==1.0.2
 pyproj==3.6.1
