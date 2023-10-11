@@ -1,8 +1,12 @@
 # Plateau Utils
 
-This is a collection of utilities for the `Plateau <https://www.mlit.go.jp/plateau/>`_ project.
+This is a collection of utilities for the [Plateau](https://www.mlit.go.jp/plateau/) project.
 
-Tested with Python 3.9　and 3.10
+```bash
+pip install plateauutils
+```
+
+Tested with Python 3.9 and 3.10
 
 ## CityGML parser
 
@@ -58,8 +62,3 @@ pip install -r dev-requirements.txt
 pytest --cov=plateauutils --cov-report=html --cov-fail-under=90
 ```
 
-## How to install
-
-```bash
-pip install plateauutils
-```
