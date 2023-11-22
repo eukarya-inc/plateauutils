@@ -17,7 +17,7 @@ dependencies = [
     "numpy",
     "pandas",
     "Pillow",
-    "py3dtiles",
+    "py3dtiles @ git+https://gitlab.com/Oslandia/py3dtiles.git@489289d2f7310fbcb8e95710e250d893999adf5d",
     "pyproj",
     "requests",
     "reearthcmsapi",

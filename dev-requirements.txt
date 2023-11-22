@@ -40,7 +40,7 @@ pluggy==1.0.0
 plyfile==1.0.1
 psutil==5.9.5
 psycopg2-binary==2.9.7
-py3dtiles==6.0.0
+git+https://gitlab.com/Oslandia/py3dtiles.git@489289d2f7310fbcb8e95710e250d893999adf5d#egg=py3dtiles
 Pygments==2.15.1
 pyproj==3.6.1
 pyproject_hooks==1.0.0
