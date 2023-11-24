@@ -43,14 +43,14 @@ class FloodToPng(NumpyTileParser):
 
 
 class Store(object):
-    """タイルの座標及び標高を保持するクラス"""
+    """タイルの座標及び属性を保持するクラス"""
 
     def __init__(self, zoom):
         self.zoom = zoom
         self.storage = dict()
 
     def add(self, x, y, classification):
-        """タイルの座標及び標高を格納するメソッド"""
+        """タイルの座標及び属性を格納するメソッド"""
         longitude, latitude = x, y
         # 座標からタイルの座標とタイル内の座標を取得
         x, y, pos_x, pos_y = self._coordinate_to_position(longitude, latitude)
@@ -66,7 +66,7 @@ class Store(object):
             # 存在しない場合は256*256の配列を作成
             array = np.zeros((256, 256), dtype=np.int32)
             self.storage[key] = array
-        # 標高を格納
+        # 属性を格納
         current = array[pos_x][pos_y]
         if current < classification:
             array[pos_x][pos_y] = classification
@@ -156,7 +156,7 @@ class PngWriter(Writer):
         except ImportError:
             print("can't import PIL / Pillow, shutdown program")
             sys.exit(-1)
-        # 標高をpngに変換
+        # 属性をpngに変換
         dt = np.dtype(
             {
                 "names": ["r", "g", "b", "a"],
