@@ -17,17 +17,28 @@ class NumpyTileParser(metaclass=abc.ABCMeta):
         tile_list = self.__make_tile_list()
         lons = []  # 経度
         lats = []  # 緯度
-        maps = []  # 標高
+        dems = []  # 標高
+        classifications = []  # 属性値
         # それぞれのタイルをパース
         for tile in tile_list:
             t = np.load(tile)
             lons.append(t["lons"])
             lats.append(t["lats"])
-            map = t["map"]
-            # 標高がnanの場合は0にする
-            map[np.isnan(map)] = 0
-            maps.append(map)
-        return np.concatenate(lons), np.concatenate(lats), np.concatenate(maps)
+            dems.append(t["dem"])
+            classifications.append(t["classification"])
+        # np.arrayに変換
+        np_lons, np_lats, np_dems, np_classifications = (
+            np.concatenate(lons),
+            np.concatenate(lats),
+            np.concatenate(dems),
+            np.concatenate(classifications),
+        )
+        # nanを除去
+        np_lons = np_lons[~np.isnan(np_dems)]
+        np_lats = np_lats[~np.isnan(np_dems)]
+        np_classifications = np_classifications[~np.isnan(np_dems)]
+        np_dems = np_dems[~np.isnan(np_dems)]
+        return np_lons, np_lats, np_dems, np_classifications
 
     def __make_tile_list(self):
         """タイルのリストを作成するメソッド"""

@@ -18,3 +18,4 @@ def test_convert(tmp_dir: str):
     flood_to_png = FloodToPng(str(DATA_DIRECTORY))
     flood_to_png.parse(output_dir=str(tmp_dir))
     assert Path(tmp_dir, "15/28264/13160.png").exists()
+    assert Path(tmp_dir, "8/220/102.png").exists()

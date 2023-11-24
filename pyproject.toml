@@ -11,13 +11,13 @@ classifiers = [
     "Development Status :: 2 - Pre-Alpha",
     "Programming Language :: Python :: 3",
 ]
-version = "0.0.12"
+version = "0.0.13"
 dependencies = [
     "click",
     "numpy",
     "pandas",
     "Pillow",
-    "py3dtiles",
+    "py3dtiles @ git+https://gitlab.com/Oslandia/py3dtiles.git@489289d2f7310fbcb8e95710e250d893999adf5d",
     "pyproj",
     "requests",
     "reearthcmsapi",
@@ -33,6 +33,9 @@ keywords = ['plateau']
 
 [tool.hatch.build]
 exclude = ["tests/*"]
+
+[tool.hatch.metadata]
+allow-direct-references = true
 
 [project.urls]
 "Homepage" = "https://eukarya-inc.github.io/plateauutils/"
