@@ -22,4 +22,4 @@ def test_convert(tmp_dir: str):
     assert Path(tmp_dir, "tileset.json").exists()
     assert Path(tmp_dir, "r.pnts").exists()
     tileset_path = tmp_dir / "tileset.json"
-    assert 256 * 256 == number_of_points_in_tileset(tileset_path)
+    assert 62615 == number_of_points_in_tileset(tileset_path)

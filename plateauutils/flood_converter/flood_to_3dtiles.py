@@ -27,7 +27,7 @@ class FloodTo3dtiles:
         """
         # xyzファイルを作成
         xyz = FloodToXyz(path).parse()
-        tmp = tempfile.mktemp(suffix=".xyz")
+        tmp = tempfile.mktemp(suffix=".csv")
         # 一時ファイルにxyzを書き込み
         with open(tmp, "w") as f:
             f.write(xyz)
