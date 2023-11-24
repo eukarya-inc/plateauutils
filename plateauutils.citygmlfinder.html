@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>plateauutils.citygmlfinder パッケージ &#8212; plateauutils  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="plateauutils.flood_converter パッケージ" href="plateauutils.flood_converter.html" />
+    <link rel="prev" title="plateauutils.parser パッケージ" href="plateauutils.parser.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="plateauutils-citygmlfinder">
+<h1>plateauutils.citygmlfinder パッケージ<a class="headerlink" href="#plateauutils-citygmlfinder" title="Link to this heading">¶</a></h1>
+<section id="module-plateauutils.citygmlfinder.from_reearth_cms">
+<span id="plateauutils-citygmlfinder-from-reearth-cms"></span><h2>plateauutils.citygmlfinder.from_reearth_cms モジュール<a class="headerlink" href="#module-plateauutils.citygmlfinder.from_reearth_cms" title="Link to this heading">¶</a></h2>
+<dl class="py exception">
+<dt class="sig sig-object py" id="plateauutils.citygmlfinder.from_reearth_cms.NoArgsException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plateauutils.citygmlfinder.from_reearth_cms.</span></span><span class="sig-name descname"><span class="pre">NoArgsException</span></span><a class="headerlink" href="#plateauutils.citygmlfinder.from_reearth_cms.NoArgsException" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="plateauutils.citygmlfinder.from_reearth_cms.NotFoundException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plateauutils.citygmlfinder.from_reearth_cms.</span></span><span class="sig-name descname"><span class="pre">NotFoundException</span></span><a class="headerlink" href="#plateauutils.citygmlfinder.from_reearth_cms.NotFoundException" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plateauutils.citygmlfinder.from_reearth_cms.private_query">
+<span class="sig-prename descclassname"><span class="pre">plateauutils.citygmlfinder.from_reearth_cms.</span></span><span class="sig-name descname"><span class="pre">private_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefecture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">city_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plateauutils.citygmlfinder.from_reearth_cms.private_query" title="Link to this definition">¶</a></dt>
+<dd><p>Re:EarthのプライベートAPIを利用して都道府県、市町村名からCityGMLを取得する</p>
+<section id="parameters">
+<h3>Parameters<a class="headerlink" href="#parameters" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>endpoint<span class="classifier">str</span></dt><dd><p>APIのエンドポイント</p>
+</dd>
+<dt>access_token<span class="classifier">str</span></dt><dd><p>APIのアクセストークン</p>
+</dd>
+<dt>project<span class="classifier">str</span></dt><dd><p>プロジェクトのIDもしくはエイリアス</p>
+</dd>
+<dt>model<span class="classifier">str</span></dt><dd><p>モデルのIDもしくはエイリアス</p>
+</dd>
+<dt>prefecture<span class="classifier">str</span></dt><dd><p>都道府県</p>
+</dd>
+<dt>city_name<span class="classifier">str</span></dt><dd><p>市町村</p>
+</dd>
+</dl>
+</section>
+<section id="returns">
+<h3>Returns<a class="headerlink" href="#returns" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>str</dt><dd><p>CityGMLのパス</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plateauutils.citygmlfinder.from_reearth_cms.public_query">
+<span class="sig-prename descclassname"><span class="pre">plateauutils.citygmlfinder.from_reearth_cms.</span></span><span class="sig-name descname"><span class="pre">public_query</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefecture</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">city_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#plateauutils.citygmlfinder.from_reearth_cms.public_query" title="Link to this definition">¶</a></dt>
+<dd><p>Re:EarthのパブリックAPIを利用して都道府県、市町村名からCityGMLを取得する</p>
+<section id="id1">
+<h3>Parameters<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>endpoint<span class="classifier">str</span></dt><dd><p>APIのエンドポイント</p>
+</dd>
+<dt>prefecture<span class="classifier">str</span></dt><dd><p>都道府県</p>
+</dd>
+<dt>city_name<span class="classifier">str</span></dt><dd><p>市町村</p>
+</dd>
+</dl>
+</section>
+<section id="id2">
+<h3>Returns<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>str</dt><dd><p>CityGMLのパス</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="plateauutils.citygmlfinder.from_reearth_cms.upload_to_reearth">
+<span class="sig-prename descclassname"><span class="pre">plateauutils.citygmlfinder.from_reearth_cms.</span></span><span class="sig-name descname"><span class="pre">upload_to_reearth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">endpoint</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">project</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plateauutils.citygmlfinder.from_reearth_cms.upload_to_reearth" title="Link to this definition">¶</a></dt>
+<dd><p>Re:EarthのプライベートAPIを利用してプロジェクトにファイルをアップロードする</p>
+<section id="id3">
+<h3>Parameters<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>endpoint<span class="classifier">str</span></dt><dd><p>APIのエンドポイント</p>
+</dd>
+<dt>access_token<span class="classifier">str</span></dt><dd><p>APIのアクセストークン</p>
+</dd>
+<dt>project<span class="classifier">str</span></dt><dd><p>プロジェクトのID</p>
+</dd>
+<dt>filepath<span class="classifier">str</span></dt><dd><p>ローカルコンピュータ上のファイルパス</p>
+</dd>
+</dl>
+</section>
+<section id="id4">
+<h3>Returns<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<dl class="simple">
+<dt>boolean</dt><dd><p>アップロードの成否</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">plateauutils</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">plateauutils</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="plateauutils.html">plateauutils パッケージ</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">plateauutils</a><ul>
+  <li><a href="plateauutils.html">plateauutils パッケージ</a><ul>
+      <li>Previous: <a href="plateauutils.parser.html" title="previous chapter">plateauutils.parser パッケージ</a></li>
+      <li>Next: <a href="plateauutils.flood_converter.html" title="next chapter">plateauutils.flood_converter パッケージ</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Eukarya Inc..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/plateauutils.citygmlfinder.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

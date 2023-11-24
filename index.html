@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Welcome to plateauutils’s documentation! &#8212; plateauutils  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=4f649999" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css?v=039e1c02" />
+    <script src="_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="plateauutils" href="modules.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="welcome-to-plateauutils-s-documentation">
+<h1>Welcome to plateauutils’s documentation!<a class="headerlink" href="#welcome-to-plateauutils-s-documentation" title="Link to this heading">¶</a></h1>
+<p>This is a collection of utilities for the <a class="reference external" href="https://www.mlit.go.jp/plateau/">Plateau</a> project.</p>
+<p>Source code available at <a class="reference external" href="https://github.com/eukarya-inc/plateauutils">GitHub</a>.</p>
+<section id="how-to-develop">
+<h2>How to develop<a class="headerlink" href="#how-to-develop" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>python3.9<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>venv
+./venv/bin/activate
+pip<span class="w"> </span>install<span class="w"> </span>-U<span class="w"> </span>pip
+pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>dev-requirements.txt
+pytest<span class="w"> </span>--cov<span class="o">=</span>plateauutils<span class="w"> </span>--cov-report<span class="o">=</span>html<span class="w"> </span>--cov-fail-under<span class="o">=</span><span class="m">90</span>
+</pre></div>
+</div>
+</section>
+<section id="how-to-install">
+<h2>How to install<a class="headerlink" href="#how-to-install" title="Link to this heading">¶</a></h2>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip<span class="w"> </span>install<span class="w"> </span>plateauutils
+</pre></div>
+</div>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<p>CityGML and MvtTile parsers.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">shapely.geometry</span> <span class="kn">import</span> <span class="n">Point</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">plateauutils.mesh_geocorder.geo_to_mesh</span> <span class="kn">import</span> <span class="n">point_to_meshcode</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">point</span> <span class="o">=</span> <span class="n">Point</span><span class="p">(</span><span class="mf">139.71475</span><span class="p">,</span> <span class="mf">35.70078</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mesh_code</span> <span class="o">=</span> <span class="n">point_to_meshcode</span><span class="p">(</span><span class="n">point</span><span class="p">,</span> <span class="s2">&quot;2/1&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mesh_code</span>
+<span class="go">&#39;533945471&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">shapely</span> <span class="kn">import</span> <span class="n">from_wkt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">plateauutils.parser.city_gml_parser</span> <span class="kn">import</span> <span class="n">CityGMLParser</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target_polygon</span> <span class="o">=</span> <span class="n">from_wkt</span><span class="p">(</span><span class="s2">&quot;POLYGON ((130.41249721501615 33.224722548534864, 130.41249721501615 33.22506264293093, 130.41621606802997 33.22506264293093, 130.41621606802997 33.224722548534864, 130.41249721501615 33.224722548534864))&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span> <span class="o">=</span> <span class="n">CityGMLParser</span><span class="p">(</span><span class="n">target_polygon</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">download_and_parse</span><span class="p">(</span><span class="s2">&quot;https://assets.cms.plateau.reearth.io/assets/d6/70821e-7f58-4f69-bc34-341875704e78/40203_kurume-shi_2020_citygml_3_op.zip&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span>
+<span class="go">[{&#39;gid&#39;: &#39;bldg_383f1804-aa34-4634-949f-f769e09fa92d&#39;, &#39;center&#39;: [130.41263587199947, 33.22489181671553], &#39;min_height&#39;: 3.805999994277954, &#39;measured_height&#39;: 9.3, &#39;building_structure_type&#39;: &#39;非木造&#39;}, {&#39;gid&#39;: &#39;bldg_877dea60-35d0-4fd9-8b02-852e39c75d81&#39;, &#39;center&#39;: [130.41619367090038, 33.22492719812357], &#39;min_height&#39;: 4.454999923706055, &#39;measured_height&#39;: 3.0, &#39;building_structure_type&#39;: &#39;非木造&#39;},...]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">plateauutils.parser.mvt_tile_parser</span> <span class="kn">import</span> <span class="n">MvtTileParser</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">target_polygon</span> <span class="o">=</span> <span class="n">from_wkt</span><span class="p">(</span><span class="s2">&quot;POLYGON ((130.525689 33.323966, 130.522728 33.314069, 130.511441 33.308653, 130.501013 33.30937, 130.492516 33.318516, 130.493717 33.325831, 130.504618 33.332249, 130.512857 33.332213, 130.525689 33.323966))&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">parser</span> <span class="o">=</span> <span class="n">MvtTileParser</span><span class="p">(</span><span class="n">target_polygon</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">download_and_parse</span><span class="p">(</span><span class="s2">&quot;https://assets.cms.plateau.reearth.io/assets/43/53a0e1-cc14-4228-a5ef-19333a23596d/40203_kurume-shi_2020_3dtiles-mvt_3_op.zip&quot;</span><span class="p">,</span> <span class="s2">&quot;/tmp&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">result</span>
+<span class="go">[&#39;/tmp/40203_kurume-shi_2020_3dtiles-mvt_3_op/luse/15/28254/13174.mvt&#39;]</span>
+</pre></div>
+</div>
+<p>Flood converter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">plateauutils.flood_converter.flood_to_3dtiles</span> <span class="kn">import</span> <span class="n">FloodTo3dtiles</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span> <span class="o">=</span> <span class="n">FloodTo3dtiles</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;/tmp/floodmap_depth&#39;</span><span class="p">,</span> <span class="s1">&#39;/tmp/depth_3dtiles&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">plateauutils.flood_converter.flood_to_png</span> <span class="kn">import</span> <span class="n">FloodToPng</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span> <span class="o">=</span> <span class="n">FloodToPng</span><span class="p">(</span><span class="s1">&#39;/tmp/floodmap_depth&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">p</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="s1">&#39;/tmp/depth_png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">plateauutils</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="plateauutils.html">plateauutils パッケージ</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="#">plateauutils</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">plateauutils</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="#">Documentation overview</a><ul>
+      <li>Next: <a href="modules.html" title="next chapter">plateauutils</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Eukarya Inc..
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 7.2.6</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/index.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
