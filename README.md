@@ -11,16 +11,13 @@
 本システムの詳細については[技術検証レポート](https:XXXX)を参照してください。
 
 ## 3. 利用手順 <!-- 下記の通り、GitHub Pagesへリンクを記載ください。URLはアクセンチュアにて設定しますので、サンプルそのままでOKです。 -->
-本システムの構築手順及び利用手順については[利用チュートリアル](https:/XXXX)を参照してください。
-
+以下のpipコマンドにより、ライブラリをインポートしてください。
 ```bash
 pip install plateauutils
 ```
 
-Tested with Python 3.9 and 3.10
-
 ## CityGML parser
-
+CityGMLのパーサーするには、以下を参照してください。
 ```python
 >>> from shapely.geometry import Point
 >>> from plateauutils.mesh_geocorder.geo_to_mesh import point_to_meshcode
@@ -40,6 +37,7 @@ Tested with Python 3.9 and 3.10
 3D都市モデルのCityGMLのZIPファイルのURLは[G空間情報センター](https://www.geospatial.jp/ckan/dataset/plateau)から取得できる。
 
 ## MVT parser
+MVTのパーサーするには、以下を参照してください。
 
 ```python
 >>> from plateauutils.parser.mvt_tile_parser import MvtTileParser
@@ -53,6 +51,7 @@ Tested with Python 3.9 and 3.10
 
 
 ## Flood converter
+浸水を3DTiles化するには、以下を参照してください。
 
 ```python
 >>> from plateauutils.flood_converter.flood_to_3dtiles import FloodTo3dtiles
@@ -64,6 +63,7 @@ Tested with Python 3.9 and 3.10
 ```
 
 ## How to develop
+開発方法は以下の通りです。
 
 ```bash
 python3.9 -m venv venv
