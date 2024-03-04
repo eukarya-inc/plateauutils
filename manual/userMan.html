@@ -144,13 +144,11 @@
 &gt;&gt;&gt; result
 ['/tmp/40203_kurume-shi_2020_3dtiles-mvt_3_op/luse/15/28254/13174.mvt']
 </code></pre>
-
-<h2 id="2-4 Flood converter">2-4 Flood converter</h2>
-<p>浸水タイルを3DTilesに変換する機能を利用するには、ライブラリ内の<a href="https://github.com/eukarya-inc/plateauutils/blob/main/plateauutils/flood_converter/flood_to_3dtiles.py>"flood_converter/flood_to_3dtiles.py</a>よりFloodTo3dtilesをインポートしてください。</p>
-<p>浸水タイルをXYZタイルに変換する機能を利用するには、ライブラリ内の<a href="https://github.com/eukarya-inc/plateauutils/blob/main/plateauutils/flood_converter/flood_to_3dtiles.py">flood_converter/flood_to_png.py</a>よりFloodToPngをインポートしてください。</p>
+<h2 id="2-4-flood-converter">2-4 Flood converter</h2>
+<p>浸水タイルを3DTilesに変換する機能を利用するには、ライブラリ内の<a href="https://github.com/eukarya-inc/plateauutils/blob/main/plateauutils/flood_converter/flood_to_3dtiles.py">flood_converter/flood_to_3dtiles.py</a>よりFloodTo3dtilesをインポートしてください。
+浸水タイルをXYZタイルに変換する機能を利用するには、ライブラリ内の<a href="https://github.com/eukarya-inc/plateauutils/blob/main/plateauutils/flood_converter/flood_to_3dtiles.py">flood_converter/flood_to_png.py</a>よりFloodToPngをインポートしてください。</p>
 <p>以下はサンプルコードです。</p>
-<pre><code class="lang-python">&gt;&gt;&gt; 
-&gt;&gt;&gt; from plateauutils.flood_converter.flood_to_3dtiles import FloodTo3dtiles
+<pre><code class="lang-python">&gt;&gt;&gt; from plateauutils.flood_converter.flood_to_3dtiles import FloodTo3dtiles
 &gt;&gt;&gt; f = FloodTo3dtiles()
 &gt;&gt;&gt; f.convert('/tmp/floodmap_depth', '/tmp/depth_3dtiles')
 &gt;&gt;&gt; from plateauutils.flood_converter.flood_to_png import FloodToPng
