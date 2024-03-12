@@ -106,14 +106,37 @@
 </tr>
 </tbody>
 </table>
-<p>パーサーにより、以下の属性を抽出する。
-| 名称   |  内容 |
-| --------|-----------------------------|
-| gmlid | id |
-| center |  中心座標 |
-| min_height |  最小高さ |
-| measured_height |  測定高さ |
-| building_structure_type |  建物構造種別(コード) |</p>
+<p>パーサーにより、以下の属性を抽出する。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gmlid</td>
+<td>id</td>
+</tr>
+<tr>
+<td>center</td>
+<td>中心座標</td>
+</tr>
+<tr>
+<td>min_height</td>
+<td>最小高さ</td>
+</tr>
+<tr>
+<td>measured_height</td>
+<td>測定高さ</td>
+</tr>
+<tr>
+<td>building_structure_type</td>
+<td>建物構造種別(コード)</td>
+</tr>
+</tbody>
+</table>
 <p>3D都市モデルのバージョン1.4、1.5、2.0、3.0に対応</p>
 <h2 id="2-2-citygml-parser">2-2 CityGML parser</h2>
 <p>CityGMLのパーサーを利用するには、ライブラリ内の<a href="https://github.com/eukarya-inc/plateauutils/blob/main/plateauutils/parser/city_gml_parser.py">parser/city_gml_parser.py</a>よりCityGMLParserをインポートしてください。
