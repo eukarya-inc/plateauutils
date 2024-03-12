@@ -18,6 +18,7 @@ def test_citygml_parser_v2():
         assert result[0]["min_height"] == 3.805999994277954
         assert result[0]["measured_height"] == 9.3
         assert result[0]["building_structure_type"] == "非木造"
+        assert result[0]["usage"] == "運輸倉庫施設"
 
 
 def test_citygml_parser_v1_4():
@@ -35,3 +36,4 @@ def test_citygml_parser_v1_4():
         assert result[0]["min_height"] == 4.454999923706055
         assert result[0]["measured_height"] == 3.0
         assert result[0]["building_structure_type"] == "非木造"
+        assert result[0]["usage"] == "共同住宅"
