@@ -96,9 +96,9 @@ class CityGMLParser(PlateauParser):
                     )
                     > 0
                 ):
-                    ns[
-                        "uro"
-                    ] = "http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4"
+                    ns["uro"] = (
+                        "http://www.kantei.go.jp/jp/singi/tiiki/toshisaisei/itoshisaisei/iur/uro/1.4"
+                    )
                     version = 1
                 elif (
                     len(
@@ -108,9 +108,9 @@ class CityGMLParser(PlateauParser):
                     )
                     > 0
                 ):
-                    ns[
-                        "uro"
-                    ] = "https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5"
+                    ns["uro"] = (
+                        "https://www.chisou.go.jp/tiiki/toshisaisei/itoshisaisei/iur/uro/1.5"
+                    )
                     version = 1
                 # versionがNoneならエラーとする
                 if version is None:
@@ -226,6 +226,27 @@ class CityGMLParser(PlateauParser):
             except AttributeError:
                 print("uro:buildingStructureType is NoneType in", gid, "in", target)
                 building_structure_type_text = None
+            try:
+                # bldg:usageを取得
+                usage = city_object_member.find(".//bldg:usage", ns)
+                # bldg:usageのdescriptionを取得
+                usage_xml_path = os.path.normpath(
+                    os.path.join(target, "..", "../../codelists/Building_usage.xml")
+                )
+                usage_xml_root = ET.fromstring(zip_file.read(usage_xml_path))
+                usage_text = None
+                for usage_xml_root_child in usage_xml_root.findall(
+                    ".//gml:dictionaryEntry", ns
+                ):
+                    gml_name = usage_xml_root_child.find(".//gml:name", ns)
+                    if str(gml_name.text) == str(usage.text):
+                        usage_text = str(
+                            usage_xml_root_child.find(".//gml:description", ns).text
+                        )
+                        break
+            except AttributeError:
+                print("bldg:usage is NoneType in", gid, "in", target)
+                usage_text = None
             # bldg:lod1Solidを取得
             lod1_solid = city_object_member.find(".//bldg:lod1Solid", ns)
             # 返り値に入る値を作成
@@ -235,6 +256,7 @@ class CityGMLParser(PlateauParser):
                 "min_height": 10000,
                 "measured_height": measured_height,
                 "building_structure_type": building_structure_type_text,
+                "usage": usage_text,
             }
             # gml:posListを取得
             pos_lists = lod1_solid.findall(".//gml:posList", ns)
