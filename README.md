@@ -67,7 +67,7 @@ MVTのパーサーするには、以下を参照してください。
 
 ```bash
 python3.9 -m venv venv
-./venv/bin/activate
+source venv/bin/activate
 pip install -U pip
 pip install -r dev-requirements.txt
 pytest --cov=plateauutils --cov-report=html --cov-fail-under=90

@@ -37,6 +37,7 @@ class CityGMLParser(PlateauParser):
             * min_height: 最小高さ
             * measured_height: 測定高さ
             * building_structure_type: 建物構造種別(コード)
+            * usage: 用途
         """
         # ファイルが存在しないならエラー
         if not os.path.exists(target_path):
@@ -142,6 +143,7 @@ class CityGMLParser(PlateauParser):
             * min_height: 最小高さ
             * measured_height: 測定高さ
             * building_structure_type: 建物構造種別(コード)
+            * usage: 用途
         """
         saved_path = self._download(url, target_dir)
         return self.parse(saved_path)
