@@ -6,3 +6,7 @@
     href: devMan.md
   - name: 利用マニュアル
     href: userMan.md
+- name: 開発をする
+  items:
+  - name: 開発者向け情報
+    href: CONTRIBUTING.md

@@ -22,6 +22,16 @@
     },
     {
       "type": "Conceptual",
+      "source_relative_path": "manual/CONTRIBUTING.md",
+      "output": {
+        ".html": {
+          "relative_path": "manual/CONTRIBUTING.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
       "source_relative_path": "manual/devMan.md",
       "output": {
         ".html": {

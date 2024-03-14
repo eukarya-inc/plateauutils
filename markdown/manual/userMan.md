@@ -25,6 +25,7 @@
 | min_height |  最小高さ |
 | measured_height |  測定高さ |
 | building_structure_type |  建物構造種別(コード) |
+| usage |  建物用途(コード) |
 
 3D都市モデルのバージョン1.4、1.5、2.0、3.0に対応
 
