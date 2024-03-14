@@ -1,15 +1,5 @@
 # 開発者向け情報
 
-## 開発環境の整備
-
-```bash
-python3.9 -m venv venv
-./venv/bin/activate
-pip install -U pip
-pip install -r dev-requirements.txt
-pytest --cov=plateauutils --cov-report=html --cov-fail-under=90
-```
-
 ## CityGMLのパーサーを拡充する
 
 CityGMLのパーサーを拡充する(パースする属性を増やす)には、ライブラリ内の[parser/city_gml_parser.py](https://github.com/eukarya-inc/plateauutils/blob/main/plateauutils/parser/city_gml_parser.py)の`_parse`メソッドを修正します。
@@ -46,7 +36,7 @@ CityGMLのパーサーを拡充する(パースする属性を増やす)には�
 
 Plateauではファイルによって存在しない属性があるため、`try`ブロックを使うことでエラーを回避しています。
 
-最後に、`usage_text`を`return_value`に追加します。
+次に、`usage_text`を`return_value`に追加します。
 
 ```python
             return_value = {
@@ -59,9 +49,11 @@ Plateauではファイルによって存在しない属性があるため、`try
             }
 ```
 
+最後に`parse`メソッド及び`download_and_parse`メソッドのAPIドキュメント部分を修正します。[PR#65](https://github.com/eukarya-inc/plateauutils/pull/65)
+
 Plataeuでは様々な属性が定義されているため、属性に応じて`_parse`メソッドを拡充していき、`return_value`に属性を増やしていきます。
 
-そのときに気をつけるべきことは、属性値の属性の型及び多重度です。
+その際に気をつけるべきことは、属性値の属性の型及び多重度です。属性値の属性の型及び多重度は、[Plateauのドキュメント](https://www.mlit.go.jp/plateau/file/libraries/doc/plateau_doc_0001_ver03.pdf)に記載されています。
 
 例えば、`uro:realEstateIDOfBuilding`は`xs:string`型であり、`1`の多重度を持ちます。
 
@@ -73,11 +65,13 @@ Plataeuでは様々な属性が定義されているため、属性に応じて`
 
 このように、属性値の属性の型及び多重度に応じて`_parse`メソッドを拡充していきます。
 
+`bldg:usage`のように、`gml:CodeType`を参照する場合は`codelists`ディレクトリ内のXMLファイルを参照してください。
+
 ## コード整形について
 
 コード整形には、[black](https://pypi.org/project/black/)を利用しています。
 
-Visual Studio Codeの場合はすでに設定されているため、特に設定は不要です。
+Visual Studio Codeの場合はすでに設定されているため、特に追加設定は不要ですが、拡張機能 [Black Formatter](https://marketplace.visualstudio.com/items?itemName=ms-python.black-formatter) をインストールしておく必要があります。
 
 なお、現状の設定では保存時に自動的にコード整形が行われます。
 
@@ -89,7 +83,9 @@ Visual Studio Codeの場合はすでに設定されているため、特に設�
 
 その際、テストデータが肥大化しないように注意をしてください。
 
-ローカルのテストデータの場合は`tests`ディレクトリ内に配置してください。
+ローカルのテストデータの場合はテストコードと同じ`tests`ディレクトリ内に配置してください。
+
+なお、Pull Requestを送る際は、テストが通ることを確認してください。Github workflowでテストが実行されます。
 
 ## APIドキュメントについて
 
@@ -103,3 +99,28 @@ make html
 ```
 
 ビルド後、`doc/_build/html/index.html`をブラウザで開くと、APIドキュメントが閲覧できます。
+
+## リリースについて
+
+リリースを行うにはまず、[pyproject.toml](https://github.com/eukarya-inc/plateauutils/blob/main/pyproject.toml)の`version`を更新します。
+
+次に、Release Tagを作成します。
+
+```bash
+git tag v0.0.15
+git push --tags
+```
+
+次に、[GitHub Tags](https://github.com/eukarya-inc/plateauutils/tags)からTagを選択し、`Release`を作成します。
+
+`Release`を作成する際には、`Generate release note`を選択して、`Release`を作成します。
+
+最後に、[PyPI](https://pypi.org/project/plateauutils/)にリリースをアップロードします。PyPIのアカウント及びアクセストークンが必要です。
+
+```bash
+python -m build
+python -m twine upload --repository plateauutils-test dist/*
+python -m twine upload --repository plateauutils dist/*
+```
+
+PyPIにリリースをアップロードする際には、`--repository`オプションで`plateauutils-test`を指定することで、テストリリースをアップロードできます。

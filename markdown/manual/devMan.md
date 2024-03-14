@@ -20,14 +20,16 @@
 # 3 インストール手順
 
 pipコマンドにより、本ライブラリをインストールすることができます。
+
 ```bash
 pip install git+https://github.com/eukarya-inc/plateauutils/
 ```
 
 仮想環境により、Pythonプロジェクトを開発するための手順は以下の通りです。
+
 ```bash
 python3.9 -m venv venv
-./venv/bin/activate
+source venv/bin/activate
 pip install -U pip
 pip install -r dev-requirements.txt
 pytest --cov=plateauutils --cov-report=html --cov-fail-under=90
