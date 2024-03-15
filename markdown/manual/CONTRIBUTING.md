@@ -51,7 +51,7 @@ Plateauではファイルによって存在しない属性があるため、`try
 
 最後に`parse`メソッド及び`download_and_parse`メソッドのAPIドキュメント部分を修正します。[PR#65](https://github.com/eukarya-inc/plateauutils/pull/65)
 
-Plataeuでは様々な属性が定義されているため、属性に応じて`_parse`メソッドを拡充していき、`return_value`に属性を増やしていきます。
+Plateauでは様々な属性が定義されているため、属性に応じて`_parse`メソッドを拡充していき、`return_value`に属性を増やしていきます。
 
 その際に気をつけるべきことは、属性値の属性の型及び多重度です。属性値の属性の型及び多重度は、[Plateauのドキュメント](https://www.mlit.go.jp/plateau/file/libraries/doc/plateau_doc_0001_ver03.pdf)に記載されています。
 

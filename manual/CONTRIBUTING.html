@@ -118,7 +118,7 @@
             }
 </code></pre>
 <p>最後に<code>parse</code>メソッド及び<code>download_and_parse</code>メソッドのAPIドキュメント部分を修正します。<a href="https://github.com/eukarya-inc/plateauutils/pull/65">PR#65</a></p>
-<p>Plataeuでは様々な属性が定義されているため、属性に応じて<code>_parse</code>メソッドを拡充していき、<code>return_value</code>に属性を増やしていきます。</p>
+<p>Plateauでは様々な属性が定義されているため、属性に応じて<code>_parse</code>メソッドを拡充していき、<code>return_value</code>に属性を増やしていきます。</p>
 <p>その際に気をつけるべきことは、属性値の属性の型及び多重度です。属性値の属性の型及び多重度は、<a href="https://www.mlit.go.jp/plateau/file/libraries/doc/plateau_doc_0001_ver03.pdf">Plateauのドキュメント</a>に記載されています。</p>
 <p>例えば、<code>uro:realEstateIDOfBuilding</code>は<code>xs:string</code>型であり、<code>1</code>の多重度を持ちます。</p>
 <p>このケースでは、<code>return_value</code>にはString型の値を追加しますが、Plateauのバージョンによっては属性が無いため、<code>try</code>ブロックを使ってエラーを回避します。</p>
