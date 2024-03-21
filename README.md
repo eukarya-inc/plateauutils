@@ -70,4 +70,4 @@
 
 ## 10. 参考資料 <!-- 技術検証レポートのURLはアクセンチュアにて記載します。 -->
 - 技術検証レポート: https:XXXX
-- PLATEAU WebサイトのUse caseページ「人工衛星観測データを用いた浸水被害把握等」: https/XXXX/
+- PLATEAU WebサイトのUse caseページ「人工衛星観測データを用いた浸水被害把握等」: https://www.mlit.go.jp/plateau/use-case/uc23-01/
